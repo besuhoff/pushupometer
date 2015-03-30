@@ -1,0 +1,7 @@
+node_modules/
+bower_components/
+build/target/
+.idea/
+*.log
+src/js/app/templates.js
+src/js/libs
