@@ -17,13 +17,13 @@ module.exports = function(grunt) {
        dev: {
          files: [
            {src: 'bower_components/angular/angular.js', dest:'src/js/libs/angular.js'},
-           {src: 'bower_components/angular-route/angular-route.js', dest:'src/js/libs/angular-route.js'},
+           {src: 'bower_components/angular-ui-router/release/angular-ui-router.js', dest:'src/js/libs/angular-ui-router.js'},
          ]
        },
        prod: {
          files: [
            {src: 'bower_components/angular/angular.min.js', dest: buildTarget + '/js/libs/angular.js'},
-           {src: 'bower_components/angular-route/angular-route.min.js', dest: buildTarget + '/libs/angular-route.js'},
+           {src: 'bower_components/angular-ui-router/release/angular-ui-router.min.js', dest: buildTarget + '/libs/angular-ui-router.js'},
            {expand: true, cwd: 'src/', src: ['assets/**', 'js/app/**', '*'], dest: buildTarget, dot: true}
          ]
        }

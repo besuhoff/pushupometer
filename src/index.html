@@ -18,7 +18,7 @@
     <link href='http://fonts.googleapis.com/css?family=Amaranth:400,400italic' rel='stylesheet' type='text/css'>
 
     <script type="text/javascript" src="/js/libs/angular.js"></script>
-    <script type="text/javascript" src="/js/libs/angular-route.js"></script>
+    <script type="text/javascript" src="/js/libs/angular-ui-router.js"></script>
 
     <!-- build:js /js/app.min.js -->
     <script type="text/javascript" src="/js/app/app.js"></script>
@@ -29,20 +29,20 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">Explore push-uppers</li>
                 <li>
-                    <a href="#">Active this week &#9733;</a>
+                    <a ui-sref="list.week">Active this week &#9733;</a>
                 </li>
                 <li>
-                    <a href="#">Heroes of the month &#9733;&#9733;&#9733;</a>
+                    <a ui-sref="list.month">Heroes of the month &#9733;&#9733;&#9733;</a>
                 </li>
                 <li>
-                    <a href="#">Lucky ones &#9774;</a>
+                    <a ui-sref="list.lucky">Lucky ones &#9774;</a>
                 </li>
                 <li>
-                    <a class="text-rusted" href="#">Rusted debtors &#9860;</a>
+                    <a class="text-rusted" ui-sref="list.debtors">Rusted debtors &#9860;</a>
                 </li>
             </ul>
         </div>
-        <div id="page-content-wrapper" ng-view></div>
+        <div id="page-content-wrapper" ui-view></div>
     </div>
     <footer class="footer">
         <div>

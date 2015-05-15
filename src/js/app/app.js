@@ -1,17 +1,23 @@
-angular.module('Application', ['ngRoute', 'app-templates'])
+angular.module('Application', ['ui.router', 'app-templates'])
+.controller('ListController', function () {
+
+})
 .controller('MainController', function () {
 
 })
-.config(function($routeProvider, $locationProvider) {
-  $routeProvider
-    .when('/', {
-      templateUrl: 'js/templates/index.html',
-      controller: 'MainController'
+.config(function($stateProvider, $locationProvider) {
+  $stateProvider
+    .state('base', {
+      abstract: true,
+      url: '/',
+      controller: 'MainController',
+      templateUrl: 'js/templates/base.html'
     })
-    .when('/index.html', {
-      templateUrl: 'js/templates/index.html',
-      controller: 'MainController'
+    .state('list', {
+      parent: 'base',
+      url: '',
+      templateUrl: 'js/templates/list.html',
+      controller: 'ListController'
     });
-
   $locationProvider.html5Mode(true);
 });
