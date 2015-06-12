@@ -2,12 +2,12 @@
     <div class="media user-bar">
         <div class="media-left">
             <a href="#">
-                <img ng-src="{{ctrl.getCurrentUser().avatar_url}}" class="media-object avatar">
+                <img ng-src="{{mainCtrl.getCurrentUser().avatar_url}}" class="media-object avatar">
             </a>
         </div>
         <div class="media-body">
-            <p class="hello">Hi, {{ctrl.getCurrentUser().login}}!</p>
-            <p class="logout"><a href="" ng-click="ctrl.logout()">Sign out &rightarrow;</a></p>
+            <p class="hello">Hi, {{mainCtrl.getCurrentUser().login}}!</p>
+            <p class="logout"><a href="" ng-click="mainCtrl.logout()">Sign out &rightarrow;</a></p>
         </div>
     </div>
     <ul class="sidebar-nav">

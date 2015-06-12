@@ -4,6 +4,11 @@ angular.module('pushupometer')
       RestangularConfigurer.setBaseUrl(SETTINGS.API_URL);
     });
   })
+  .service('GithubService', function(ApiService, SETTINGS) {
+    this.getMembers = function() {
+      return ApiService.all('github').all('orgs').all(SETTINGS.ORGANIZATION).all('members').getList();
+    }
+  })
   .service('AuthService', function ($window, $q, $cookieStore, ApiService, SETTINGS) {
     var userData = false;
 

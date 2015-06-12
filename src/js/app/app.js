@@ -1,7 +1,12 @@
 angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-templates'])
 
-  .controller('ListController', function() {
+  .controller('ListController', function(GithubService) {
+    var ctrl = this;
+    this.members = [];
 
+    GithubService.getMembers().then(function(members) {
+      ctrl.members = members;
+    });
   })
 
   .controller('MainController', function($state, AuthService) {
@@ -35,7 +40,8 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
 
   .constant('SETTINGS', {
     API_URL: '/api',
-    AUTH_URL: '/api/github/oauth'
+    AUTH_URL: '/api/github/oauth',
+    ORGANIZATION: 'StudyTube'
   })
 
   .config(function ($urlRouterProvider, $locationProvider, $stateProvider, RestangularProvider) {
@@ -52,7 +58,7 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
         url: '/',
         controller: 'MainController',
         templateUrl: 'js/templates/base.html',
-        controllerAs: 'ctrl'
+        controllerAs: 'mainCtrl'
       })
       .state('login', {
         url: '/login?code=',
@@ -65,6 +71,13 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
         url: '',
         templateUrl: 'js/templates/list.html',
         controller: 'ListController',
+        controllerAs: 'ctrl'
+      })
+      .state('workout', {
+        parent: 'base',
+        url: 'workout/:user',
+        templateUrl: 'js/templates/workout.html',
+        controller: 'WorkoutController',
         controllerAs: 'ctrl'
       });
   })
