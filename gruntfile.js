@@ -16,14 +16,20 @@ module.exports = function(grunt) {
     copy: {
        dev: {
          files: [
+           {src: 'bower_components/lodash/lodash.js', dest:'src/js/libs/lodash.js'},
            {src: 'bower_components/angular/angular.js', dest:'src/js/libs/angular.js'},
+           {src: 'bower_components/angular-cookies/angular-cookies.js', dest: 'src/js/libs/angular-cookies.js'},
            {src: 'bower_components/angular-ui-router/release/angular-ui-router.js', dest:'src/js/libs/angular-ui-router.js'},
+           {src: 'bower_components/restangular/dist/restangular.js', dest:'src/js/libs/restangular.js'},
          ]
        },
        prod: {
          files: [
+           {src: 'bower_components/lodash/lodash.min.js', dest: buildTarget + '/js/libs/lodash.js'},
+           {src: 'bower_components/angular-cookies/angular-cookies.min.js', dest: buildTarget + '/js/libs/angular-cookies.js'},
            {src: 'bower_components/angular/angular.min.js', dest: buildTarget + '/js/libs/angular.js'},
            {src: 'bower_components/angular-ui-router/release/angular-ui-router.min.js', dest: buildTarget + '/libs/angular-ui-router.js'},
+           {src: 'bower_components/restangular/dist/restangular.js', dest: buildTarget + '/libs/restangular.js'},
            {expand: true, cwd: 'src/', src: ['assets/**', 'js/app/**', '*'], dest: buildTarget, dot: true}
          ]
        }

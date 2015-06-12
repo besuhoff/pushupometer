@@ -9,7 +9,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAABRUlEQVRIS+2V8Q3BQBjF2YAJGMEGjGADtQEb1ASYQE2ADWoCNmADNuD9ku9LmqanPRF/9ZKX43r3fve93tHt/KF1/8DotJColImrJ62lqXSXVtIxyqVmMpDM5iTqR1JuPcCfNCBPq8YNNzY2Vj+x6lL1+2+JQNgxUV3NhEqI0McBLay6nfqtbaIxEwiATMKAuPoGKYIxHEpUxDjvsDHM7wkG/uJ56UQIkGp4Ru8tGha6jFRGfLnEZ4Dl1hgWgmBKRRhR1c2AjJ1LtFrYp58VIiLC1KrCm++DAvBkm+BZEBaCTAqVsHsiQzROHjDEvIPEIfDTCSyROJE8W1ZBMLlIczPBCFU1DIFh+JAyifvkd48716uCYMgiFiCMWFTXWJdIsxIsD1VC6VTEQo+hDuLPPU42ygYXQF5NV387r/3TikqujSsqrjdl+FEpGTY8JwAAAABJRU5ErkJggg==" />
 </head>
 
-<body ng-app="Application">
+<body ng-app="pushupometer">
     <!-- build:css /assets/app.min.css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link href='assets/css/simple-sidebar.css' type='text/css' rel='stylesheet'>
@@ -17,16 +17,19 @@
     <!-- endbuild -->
     <link href='http://fonts.googleapis.com/css?family=Amaranth:400,400italic' rel='stylesheet' type='text/css'>
 
+    <script type="text/javascript" src="/js/libs/lodash.js"></script>
     <script type="text/javascript" src="/js/libs/angular.js"></script>
+    <script type="text/javascript" src="/js/libs/angular-cookies.js"></script>
     <script type="text/javascript" src="/js/libs/angular-ui-router.js"></script>
+    <script type="text/javascript" src="/js/libs/restangular.js"></script>
 
     <!-- build:js /js/app.min.js -->
     <script type="text/javascript" src="/js/app/app.js"></script>
     <script type="text/javascript" src="/js/app/services.js"></script>
     <script type="text/javascript" src="/js/app/templates.js"></script>
     <!-- endbuild -->
-    <div id="wrapper" ng-controller="MainController">
-        <div id="sidebar-wrapper">
+    <div id="wrapper" ng-controller="MainController as ctrl">
+        <div id="sidebar-wrapper" ng-if="ctrl.getCurrentUser()">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">Explore push-uppers</li>
                 <li>

@@ -1,0 +1,6 @@
+<div class="input">
+  <p ng-show="ctrl.logoutMessage" class="message">{{ctrl.logoutMessage}}</p>
+  <form ng-submit="ctrl.gotoGithubOauth()" ng-hide="ctrl.hideForm">
+    <button class="btn btn-primary btn-auth" type="submit">Authorize with GitHub</button>
+  </form>
+</div>
