@@ -97,7 +97,7 @@
 }
 
 @media(min-width:768px) {
-    .sidebar-nav + #wrapper {
+    #wrapper {
         padding-left: 250px;
     }
 

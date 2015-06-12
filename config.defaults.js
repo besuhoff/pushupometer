@@ -1,0 +1,5 @@
+module.exports = {
+  dbConnectParams: process.env.OPENSHIFT_NODEJS_PUSHUPOMETER_DBCONNECTPARAMS,
+  clientId: process.env.OPENSHIFT_NODEJS_PUSHUPOMETER_CLIENTID,
+  clientSecret: process.env.OPENSHIFT_NODEJS_PUSHUPOMETER_CLIENTSECRET
+};

@@ -154,3 +154,24 @@ ul {
     content: '';
     clear: both;
 }
+
+.user-bar {
+    padding: 20px 20px 0;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.user-bar p {
+    margin: 0;
+}
+
+.user-bar .logout {
+    line-height: 16px;
+    font-size: 12px;
+}
+
+.user-bar .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}

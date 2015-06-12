@@ -4,10 +4,15 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
 
   })
 
-  .controller('MainController', function(AuthService) {
+  .controller('MainController', function($state, AuthService) {
     this.getCurrentUser = function() {
       return AuthService.getUser();
-    }
+    };
+
+    this.logout = function() {
+      AuthService.logout();
+      $state.go('login');
+    };
   })
 
   .controller('LoginController', function($state, $stateParams, AuthService){
@@ -46,11 +51,11 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
         abstract: true,
         url: '/',
         controller: 'MainController',
-        templateUrl: 'js/templates/base.html'
+        templateUrl: 'js/templates/base.html',
+        controllerAs: 'ctrl'
       })
       .state('login', {
-        parent: 'base',
-        url: 'login/:code',
+        url: '/login?code=',
         templateUrl: 'js/templates/login.html',
         controller:  'LoginController',
         controllerAs: 'ctrl'
@@ -59,7 +64,8 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
         parent: 'base',
         url: '',
         templateUrl: 'js/templates/list.html',
-        controller: 'ListController'
+        controller: 'ListController',
+        controllerAs: 'ctrl'
       });
   })
 
@@ -68,8 +74,10 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
       // this hack is required to allow resolve operate with current state
       $state.current = toState;
 
-      if (!AuthService.getUser() && toState.name !== 'login') {
-        $state.go('login');
-      }
+      AuthService.authenticate().catch(function() {
+        if (toState.name !== 'login') {
+          $state.go('login');
+        }
+      });
     });
   });

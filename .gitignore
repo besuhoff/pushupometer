@@ -5,3 +5,4 @@ build/target/
 *.log
 src/js/app/templates.js
 src/js/libs
+config.js

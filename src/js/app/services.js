@@ -18,7 +18,7 @@ angular.module('pushupometer')
     this.authenticate = function (code) {
       var saveToken = function(accessToken) {
         $cookieStore.put('accessToken', accessToken);
-        ApiService.setDefaultHeaders({'Authorization': 'token ' + accessToken});
+        ApiService.setDefaultHeaders({'access_token': accessToken});
         return ApiService.all('github').one('user').get().then(function(data) {
           if (data.id !== undefined) {
             userData = data;

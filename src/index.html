@@ -28,26 +28,8 @@
     <script type="text/javascript" src="/js/app/services.js"></script>
     <script type="text/javascript" src="/js/app/templates.js"></script>
     <!-- endbuild -->
-    <div id="wrapper" ng-controller="MainController as ctrl">
-        <div id="sidebar-wrapper" ng-if="ctrl.getCurrentUser()">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">Explore push-uppers</li>
-                <li>
-                    <a ui-sref="list.week">Active this week &#9733;</a>
-                </li>
-                <li>
-                    <a ui-sref="list.month">Heroes of the month &#9733;&#9733;&#9733;</a>
-                </li>
-                <li>
-                    <a ui-sref="list.lucky">Lucky ones &#9774;</a>
-                </li>
-                <li>
-                    <a class="text-rusted" ui-sref="list.debtors">Rusted debtors &#9860;</a>
-                </li>
-            </ul>
-        </div>
-        <div id="page-content-wrapper" ui-view></div>
-    </div>
+    <div id="wrapper" ui-view></div>
+
     <footer class="footer">
         <div>
             <p class="text-muted">&copy; 2015 <a href="http://pereborstudio.com">Sergiy Pereverziev</a>. <a href="http://icons8.com">Icon pack by Icons8</a></p>

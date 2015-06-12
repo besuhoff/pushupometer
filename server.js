@@ -1,6 +1,26 @@
 #!/usr/bin/env node
-var express = require('express'); 
+var extend = require('extend'),
+  mysql = require('mysql'),
+  express = require('express'),
+  config = require('./config.defaults.js'),
+  createApi = require('./api');
+
+try {
+  extend(config, require('./config'))
+} catch(e) {
+
+}
+
+var dbclient = new mysql.createConnection(config.dbConnectParams);
+dbclient.connect();
+
 var app = express();
+
+createApi(app, {
+  dbclient: dbclient,
+  clientId: config.clientId,
+  clientSecret: config.clientSecret
+});
 
 app.use(express.static(__dirname + '/src'));
 
