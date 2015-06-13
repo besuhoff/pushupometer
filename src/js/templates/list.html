@@ -5,9 +5,9 @@
                     {{ user.login }}
                 </a>
                 <ul class="stats">
-                    <li><span><i class="icon icon-pushup"></i> <span class="quantity red">519</span></span> <a href="" ng-click="ctrl.punish(user.login)" ng-if="user.login !== mainCtrl.getCurrentUser().login">punish!</a></li>
-                    <li><span><i class="icon icon-check"></i> <span class="quantity green">38</span></span>  <a ui-sref="workout({ user: user.login })">workout</a></li>
-                    <li><span><i class="icon icon-sigma"></i> <span class="quantity">557</span></span></li>
+                    <li><span><i class="icon icon-pushup"></i> <span class="quantity red">{{ user.stats.total }}</span></span> <a href="" ng-click="ctrl.punish(user.login)" ng-if="user.login !== mainCtrl.getCurrentUser().login">punish!</a></li>
+                    <li><span><i class="icon icon-check"></i> <span class="quantity green">{{ user.stats.workout }}</span></span>  <a ui-sref="workout({ user: user.login })" ng-if="user.stats.workout">workout</a></li>
+                    <li><span><i class="icon icon-sigma"></i> <span class="quantity">{{ user.stats.left }}</span></span></li>
                 </ul>
 
             </li>

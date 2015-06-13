@@ -7,7 +7,11 @@ angular.module('pushupometer')
   .service('GithubService', function(ApiService, SETTINGS) {
     this.getMembers = function() {
       return ApiService.all('github').all('orgs').all(SETTINGS.ORGANIZATION).all('members').getList();
-    }
+    };
+
+    this.getStats = function(user) {
+      return ApiService.one('workout', user).one('stats').get();
+    };
   })
   .service('AuthService', function ($window, $q, $cookieStore, ApiService, SETTINGS) {
     var userData = false;

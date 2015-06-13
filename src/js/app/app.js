@@ -6,6 +6,12 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
 
     GithubService.getMembers().then(function(members) {
       ctrl.members = members;
+
+      angular.forEach(members, function(member) {
+        GithubService.getStats(member.login).then(function(stats) {
+          member.stats = stats;
+        });
+      });
     });
   })
 

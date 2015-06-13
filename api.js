@@ -5,7 +5,7 @@ function AppBase(self, app, settings) {
   var wrapper = self,
       dbclient = settings.dbclient;
 
-  /*app.get('/api/marks/contributions/:contrib_id', function (req, res) {
+  app.get('/api/workout/:user/stats', function (req, res) {
     var token = req.headers.access_token;
 
     if (!token) {
@@ -13,44 +13,46 @@ function AppBase(self, app, settings) {
       return;
     }
 
+    var user = req.params.user,
+      sql = 'select "total" as `key`, sum(amount) as `value` ' +
+        'from (' +
+        ' select request.* ' +
+        ' from request ' +
+        ' inner join review ' +
+        ' on review.event_type = "request" and review.event_id = request.id ' +
+        ' group by request.id having count(*) >= 2 ' +
+        ') s where s.trainee = ' + dbclient.escape(user) + ' ' +
 
-    var sql = 'SELECT contrib_id, feed, count(*) as number FROM marks WHERE contrib_id = $1 GROUP BY contrib_id, feed',
-        contribId = parseInt(req.params.contrib_id, 10);
+        'union ' +
 
-    dbclient.query(sql, [contribId], function (err, queryResult) {
+        'select "workout" as `key`, sum(amount) as `value` ' +
+        'from (' +
+        ' select workout.*, ' +
+        ' count(*) as approval_count ' +
+        ' from workout ' +
+        ' inner join review ' +
+        ' on review.event_type = "workout" and review.event_id = workout.id ' +
+        ' group by workout.id ' +
+        ') s where s.trainee = ' + dbclient.escape(user) + ' and (approval_count >= 2)';
+
+    dbclient.query(sql, function (err, rows) {
 
       if (err) {
-//        console.log(err);
+        res.send(500, err);
       }
-      var rows = queryResult.rows;
-      var result = {contrib_id: contribId, pizza: 0, tomato: 0, userVote: null};
+      var result = {total: 0, workout: 0, left: 0};
 
       for (var i in [0, 1]) {
         if (rows[i]) {
-          result[rows[i].feed] = parseInt(rows[i].number, 10);
+          result[rows[i].key] = +rows[i].value;
         }
       }
+      result.left = result.total - result.workout;
 
-      wrapper._getUser(token, function (userInfo) {
-        if (!userInfo.id) {
-          res.send(401, 'Not authorized');
-          return;
-        }
-        var userId = userInfo.id,
-            sql = 'SELECT feed FROM marks WHERE contrib_id = $1 and user_id = $2';
-
-        dbclient.query(sql, [contribId, userId], function (err, queryResult) {
-          if (queryResult.rows[0]) {
-            result.userVote = queryResult.rows[0].feed;
-          }
-          res.send(result);
-        });
-
-      });
-
+      res.send(result);
     });
   });
-
+/*
   app.post('/api/marks/contributions', function (req, res) {
 
     var token = req.headers.access_token;
