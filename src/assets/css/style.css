@@ -2,11 +2,11 @@
 -------------------------------------------------- */
 html {
     position: relative;
-    min-height: 100%;
+    height: 100%;
 }
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    padding-bottom: 60px;
 }
 
 .footer {
@@ -25,6 +25,7 @@ body {
 
 body {
     font-family: Amaranth, serif;
+    height: 100%;
 }
 
 .text-rusted {
@@ -68,6 +69,24 @@ a.text-rusted:hover {
     width: 14px;
     height: 14px;
     vertical-align: -2px;
+}
+
+.form-login {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.form-login .btn-primary {
+    padding-right: 14px;
+    padding-left: 8px;
+}
+
+.icon-github {
+    background-image: url('/assets/images/github.png');
+    width: 24px;
+    height: 24px;
+    vertical-align: -8px;
+    margin-right: 2px;
 }
 
 .icon-check {
@@ -174,4 +193,20 @@ ul {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+.form-middle {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+.form-middle--row {
+    display: table-row;
+}
+
+.form-middle .form {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
 }
