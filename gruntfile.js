@@ -1,8 +1,24 @@
-var buildTarget = 'build/target';
+var config = require('./config.defaults.js'),
+  extend = require('extend'),
+  buildTarget = 'build/target';
+
+try {
+  extend(config, require('./config'))
+} catch(e) {
+
+}
 
 module.exports = function(grunt) {
 
   grunt.initConfig({
+    migrate: {
+      options: {
+        env: {
+          DATABASE_URL: config.dbConnectParams + '?multipleStatements=true'
+        },
+        verbose: true
+      }
+    },
 
     express: {
       server: {
@@ -113,11 +129,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-usemin');
+  grunt.loadNpmTasks('grunt-db-migrate');
 
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['dev']);
   grunt.registerTask('dev', ['express', 'notify', 'watch', 'express-keepalive']);
-  grunt.registerTask('install', ['copy:dev', 'html2js', 'clean:bower']);
-  grunt.registerTask('install:prod', ['copy:prod', 'html2js', 'clean:bower']);
+  grunt.registerTask('install', ['copy:dev', 'html2js', 'clean:bower', 'migrate']);
+  grunt.registerTask('install:prod', ['copy:prod', 'html2js', 'clean:bower', 'migrate']);
   grunt.registerTask('build', ['clean:build', 'install:prod', 'useminPrepare', 'concat:generated', 'ngAnnotate:generated', 'uglify:generated', 'cssmin:generated', 'usemin', 'imagemin', 'clean:prod']);
 };

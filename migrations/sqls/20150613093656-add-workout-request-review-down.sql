@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS `review`;
+DROP TABLE IF EXISTS `request`;
+DROP TABLE IF EXISTS `workout`;
