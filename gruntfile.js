@@ -134,7 +134,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['start']);
   grunt.registerTask('start', ['dev']);
   grunt.registerTask('dev', ['express', 'notify', 'watch', 'express-keepalive']);
-  grunt.registerTask('install', ['copy:dev', 'html2js', 'clean:bower', 'migrate']);
-  grunt.registerTask('install:prod', ['copy:prod', 'html2js', 'clean:bower', 'migrate']);
+  grunt.registerTask('install', ['copy:dev', 'html2js', 'clean:bower']);
+  grunt.registerTask('install:prod', ['copy:prod', 'html2js', 'clean:bower']);
   grunt.registerTask('build', ['clean:build', 'install:prod', 'useminPrepare', 'concat:generated', 'ngAnnotate:generated', 'uglify:generated', 'cssmin:generated', 'usemin', 'imagemin', 'clean:prod']);
 };
