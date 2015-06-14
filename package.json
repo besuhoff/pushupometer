@@ -35,7 +35,6 @@
     "mysql": "~2.7.0",
     "crypto": "0.0.3",
     "request": "~2.57.0",
-    "db-migrate": "~0.9.16",
     "grunt-db-migrate": "~0.2.0"
   }
 }
