@@ -1,12 +1,28 @@
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-    position: relative;
     height: 100%;
 }
 body {
     /* Margin bottom by footer height */
+    font-family: Amaranth, serif;
+    height: 100%;
+    display: table;
+    width: 100%;
+}
+
+body > ui-view {
+    display: table-row;
+}
+
+#all {
+    display: table-cell;
+    position: relative;
     padding-bottom: 60px;
+}
+
+#all.login {
+    vertical-align: middle;
 }
 
 .footer {
@@ -21,11 +37,6 @@ body {
 /* Main */
 * {
     box-sizing: border-box;
-}
-
-body {
-    font-family: Amaranth, serif;
-    height: 100%;
 }
 
 .text-rusted {
@@ -69,11 +80,6 @@ a.text-rusted:hover {
     width: 14px;
     height: 14px;
     vertical-align: -2px;
-}
-
-.form-login {
-    display: inline-block;
-    vertical-align: middle;
 }
 
 .form-login .btn-primary {
@@ -199,10 +205,6 @@ ul {
     display: table;
     height: 100%;
     width: 100%;
-}
-
-.form-middle--row {
-    display: table-row;
 }
 
 .form-middle .form {

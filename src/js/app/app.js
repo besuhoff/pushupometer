@@ -1,5 +1,9 @@
 angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-templates'])
 
+  .controller('WorkoutController', function() {
+
+  })
+
   .controller('ListController', function(GithubService) {
     var ctrl = this;
     this.members = [];
@@ -56,6 +60,7 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
       $injector.get('$state').transitionTo('login');
       $injector.get('$rootScope').prerenderStatusCode = 404;
     });
+
     RestangularProvider.setMethodOverriders(["put", "post"]);
 
     $stateProvider

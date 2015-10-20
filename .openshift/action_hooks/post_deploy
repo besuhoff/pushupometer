@@ -1,2 +1,3 @@
 #!/bin/bash
-$OPENSHIFT_REPO_DIR/node_modules/.bin/grunt migrate
+cd $OPENSHIFT_REPO_DIR;
+./node_modules/.bin/grunt migrate;

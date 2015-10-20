@@ -1,39 +1,47 @@
-<div id="wrapper" ui-view>
-    <div id="sidebar-wrapper">
-        <div class="media user-bar">
-            <div class="media-left">
-                <a href="#">
-                    <img ng-src="{{mainCtrl.getCurrentUser().avatar_url}}" class="media-object avatar">
-                </a>
+<div id="all">
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <div class="media user-bar">
+                <div class="media-left">
+                    <a href="#">
+                        <img ng-src="{{mainCtrl.getCurrentUser().avatar_url}}" class="media-object avatar">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <p class="hello">Hi, {{mainCtrl.getCurrentUser().login}}!</p>
+                    <p class="logout"><a href="" ng-click="mainCtrl.logout()">Sign out &rightarrow;</a></p>
+                </div>
             </div>
-            <div class="media-body">
-                <p class="hello">Hi, {{mainCtrl.getCurrentUser().login}}!</p>
-                <p class="logout"><a href="" ng-click="mainCtrl.logout()">Sign out &rightarrow;</a></p>
-            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">Explore push-uppers</li>
+                <li>
+                    <a ui-sref="list.week">Active this week &#9733;</a>
+                </li>
+                <li>
+                    <a ui-sref="list.month">Heroes of the month &#9733;&#9733;&#9733;</a>
+                </li>
+                <li>
+                    <a ui-sref="list.lucky">Lucky ones &#9774;</a>
+                </li>
+                <li>
+                    <a class="text-rusted" ui-sref="list.debtors">Rusted debtors &#9860;</a>
+                </li>
+            </ul>
         </div>
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">Explore push-uppers</li>
-            <li>
-                <a ui-sref="list.week">Active this week &#9733;</a>
-            </li>
-            <li>
-                <a ui-sref="list.month">Heroes of the month &#9733;&#9733;&#9733;</a>
-            </li>
-            <li>
-                <a ui-sref="list.lucky">Lucky ones &#9774;</a>
-            </li>
-            <li>
-                <a class="text-rusted" ui-sref="list.debtors">Rusted debtors &#9860;</a>
-            </li>
-        </ul>
-    </div>
-    <div id="page-content-wrapper">
-        <article>
-            <h1>Push-Up-o-meter.<br/>
-                <small><em>For those who push!</em></small>
-            </h1>
+        <div id="page-content-wrapper">
+            <article>
+                <h1>Push-Up-o-meter.<br/>
+                    <small><em>For those who push!</em></small>
+                </h1>
 
-            <section ui-view></section>
-        </article>
+                <section ui-view></section>
+            </article>
+        </div>
     </div>
+
+    <footer class="footer">
+        <div>
+            <p class="text-muted">&copy; 2015 <a href="http://pereborstudio.com">Sergiy Pereverziev</a>. <a href="http://icons8.com">Icon pack by Icons8</a></p>
+        </div>
+    </footer>
 </div>
