@@ -4,22 +4,30 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
 
   })
 
-  .controller('ListController', function(GithubService) {
-    var ctrl = this;
-    this.members = [];
-
-    GithubService.getMembers().then(function(members) {
-      ctrl.members = members;
-
-      angular.forEach(members, function(member) {
-        GithubService.getStats(member.login).then(function(stats) {
-          member.stats = stats;
-        });
-      });
-    });
+  .controller('ListController', function(members, $stateParams) {
+    this.members = members;
+    this.filter = $stateParams.filter;
   })
 
-  .controller('MainController', function($state, AuthService) {
+  .controller('MainController', function($state, $scope, AuthService) {
+    var ctrl = this;
+    ctrl.stateChanging = false;
+
+    //Call some code when a state change starts
+    $scope.$on("$stateChangeStart", function () {
+      ctrl.stateChanging = true;
+    });
+
+    //Call some code when a state change finishes
+    $scope.$on("$stateChangeSuccess", function () {
+      ctrl.stateChanging = false;
+    });
+
+    $scope.$on("$stateChangeSuccess", function () {
+      ctrl.stateChanging = false;
+    });
+
+
     this.getCurrentUser = function() {
       return AuthService.getUser();
     };
@@ -28,6 +36,13 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
       AuthService.logout();
       $state.go('login');
     };
+
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    var d = new Date();
+    this.month = monthNames[d.getMonth()];
   })
 
   .controller('LoginController', function($state, $stateParams, AuthService){
@@ -79,10 +94,24 @@ angular.module('pushupometer', ['ui.router', 'ngCookies', 'restangular', 'app-te
       })
       .state('list', {
         parent: 'base',
-        url: '',
+        url: '?filter=',
         templateUrl: 'js/templates/list.html',
         controller: 'ListController',
-        controllerAs: 'ctrl'
+        controllerAs: 'ctrl',
+        resolve: {
+          members: function(GithubService, $stateParams) {
+            return GithubService.getMembers($stateParams.filter).then(function(members) {
+              angular.forEach(members, function(member) {
+                GithubService.getStats(member.login).then(function(stats) {
+                  member.stats = stats;
+                });
+              });
+
+              return members;
+            });
+
+          }
+        }
       })
       .state('workout', {
         parent: 'base',

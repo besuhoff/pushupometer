@@ -5,8 +5,8 @@ angular.module('pushupometer')
     });
   })
   .service('GithubService', function(ApiService, SETTINGS) {
-    this.getMembers = function() {
-      return ApiService.all('github').all('orgs').all(SETTINGS.ORGANIZATION).all('members').getList();
+    this.getMembers = function(filter) {
+      return ApiService.all('users').getList({ filter: filter });
     };
 
     this.getStats = function(user) {

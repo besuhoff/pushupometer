@@ -5,6 +5,63 @@ function AppBase(self, app, settings) {
   var wrapper = self,
       dbclient = settings.dbclient;
 
+  app.get('/api/users', function(req, res) {
+    request.get({
+      uri: 'https://api.github.com/orgs/' + settings.organization + '/members',
+      headers: {
+        'Authorization': 'token ' + req.headers.access_token,
+        'User-Agent': 'pushupometer'
+      },
+      json: true
+    }, function (err, httpResponse, body) {
+      if (err) {
+//        console.error('request failed:', err);
+        res.send(500, { error: err });
+        return;
+      }
+      var users = [];
+
+      switch(req.query.filter) {
+        case 'week':
+          break;
+        case 'month':
+          var sql = 'select trainee from (select s.*, sum(amount) as `workout` ' +
+            'from (' +
+            ' select workout.*, ' +
+            ' count(*) as approval_count ' +
+            ' from workout ' +
+            ' inner join review ' +
+            ' on review.event_type = "workout" and review.event_id = workout.id ' +
+            ' group by workout.id ' +
+            ') s group by trainee having approval_count >= 2) s1 ' +
+            'where workout > 0 ' +
+            'and month(date_created) = month(now()) and year(date_created) = year(now()) ' +
+            'order by workout desc';
+
+          dbclient.query(sql, function (err, rows) {
+
+            if (err) {
+              res.send(500, err);
+            }
+            for (var i = 0; i < rows.length; i++) {
+              users.push(body.filter(function(user) { return user.login === rows[i].trainee })[0])
+            }
+            res.send(users);
+          });
+
+          break;
+        case 'lucky':
+          break;
+        case 'debtors':
+
+          break;
+        default:
+          res.send(body);
+      }
+
+    });
+  });
+
   app.get('/api/workout/:user/stats', function (req, res) {
     var token = req.headers.access_token;
 
@@ -52,62 +109,7 @@ function AppBase(self, app, settings) {
       res.send(result);
     });
   });
-/*
-  app.post('/api/marks/contributions', function (req, res) {
 
-    var token = req.headers.access_token;
-
-    if (!token) {
-      res.send(401, 'Not authorized');
-      return;
-    }
-
-    wrapper._getUser(token, function (userInfo) {
-      if (!userInfo.id) {
-        res.send(401, 'Not authorized');
-        return;
-      }
-
-      var userId = userInfo.id,
-          sql = 'select feed from marks where contrib_id = $1 AND user_id=$2',
-          contribId = req.body.contrib_id,
-          feed = req.body.feed,
-          data = [contribId, userId, feed];
-
-      dbclient.query(sql, [contribId, userId], function (err, queryResult) {
-        if (err) {
-//          console.log(err);
-          res.send({ error: err });
-          return;
-        }
-        var rows = queryResult.rows,
-            sql = '';
-
-        if (rows[0]) {
-          if (rows[0].feed !== feed) {
-            sql = 'UPDATE marks SET feed = $3 WHERE user_id = $2 AND contrib_id=$1';
-          } else {
-            res.send({ error: 'You have only one ' + feed + ' for this contribution' });
-          }
-        } else {
-          sql = 'INSERT INTO marks(contrib_id, user_id, feed) VALUES($1,$2,$3)';
-        }
-
-        if (sql !== '') {
-          dbclient.query(sql, data, function (err, queryResult) {
-            if (err) {
-//              console.log('request failed:', err);
-              res.send(500, { error: err });
-            } else {
-              res.send(queryResult);
-            }
-          });
-        }
-      });
-    });
-
-  });
-*/
   //gitHub user info request
   app.get('/api/github/user', function (req, res) {
 
@@ -131,7 +133,10 @@ function AppBase(self, app, settings) {
   self._proxy = function (req, res) {
     var url = 'https://api.github.com' + req.url.replace('/api/github/', '/');
     var apiReq = request(url, {
-      headers: { 'Authorization': 'token ' + req.headers.access_token }
+      headers: {
+        'Authorization': 'token ' + req.headers.access_token,
+        'User-Agent': 'pushupometer'
+      }
     });
 
 //    console.log(apiReq);
@@ -167,7 +172,7 @@ function App(app, settings) {
     request.get({
       uri: 'https://api.github.com/user?access_token=' + token,
       headers: {
-        'User-Agent': 'request'
+        'User-Agent': 'pushupometer'
       },
       json: true
     }, function (err, httpResponse, body) {

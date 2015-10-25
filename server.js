@@ -19,7 +19,8 @@ var app = express();
 createApi(app, {
   dbclient: dbclient,
   clientId: config.clientId,
-  clientSecret: config.clientSecret
+  clientSecret: config.clientSecret,
+  organization: config.organization
 });
 
 app.use(express.static(__dirname + '/src'));

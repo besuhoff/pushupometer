@@ -13,18 +13,20 @@
                 </div>
             </div>
             <ul class="sidebar-nav">
-                <li class="sidebar-brand">Explore push-uppers</li>
-                <li>
-                    <a ui-sref="list.week">Active this week &#9733;</a>
+                <li class="sidebar-brand">
+                    <a ui-sref="list({ filter: '' })">Explore push-uppers</a>
                 </li>
-                <li>
-                    <a ui-sref="list.month">Heroes of the month &#9733;&#9733;&#9733;</a>
+                <li ui-sref-active="active">
+                    <a ui-sref="list({ filter: 'week' })">Active this week &#9733;</a>
                 </li>
-                <li>
-                    <a ui-sref="list.lucky">Lucky ones &#9774;</a>
+                <li ui-sref-active="active">
+                    <a ui-sref="list({ filter: 'month' })">Heroes of {{mainCtrl.month}} &#9733;&#9733;&#9733;</a>
                 </li>
-                <li>
-                    <a class="text-rusted" ui-sref="list.debtors">Rusted debtors &#9860;</a>
+                <li ui-sref-active="active">
+                    <a ui-sref="list({ filter: 'lucky' })">Lucky ones &#9774;</a>
+                </li>
+                <li ui-sref-active="active">
+                    <a class="text-rusted" ui-sref="list({ filter: 'debtors' })">Rusted debtors &#9860;</a>
                 </li>
             </ul>
         </div>
@@ -34,7 +36,7 @@
                     <small><em>For those who push!</em></small>
                 </h1>
 
-                <section ui-view></section>
+                <section ui-view ng-class="{ 'ui-resolve': mainCtrl.stateChanging }"></section>
             </article>
         </div>
     </div>
